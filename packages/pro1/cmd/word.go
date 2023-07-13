@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"go-project-demo/src/pro1/internal/word"
+	"go-project-demo/packages/pro1/internal/word"
 	"log"
 	"strings"
 )

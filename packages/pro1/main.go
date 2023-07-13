@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-project-demo/src/pro1/cmd"
+	"go-project-demo/packages/pro1/cmd"
 	"log"
 )
 
