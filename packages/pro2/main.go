@@ -9,5 +9,5 @@ func main() {
 		c.JSON(200, gin.H{"message": "hello world - yanle"})
 	})
 
-	r.Run()
+	_ = r.Run()
 }
