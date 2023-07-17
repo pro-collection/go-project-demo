@@ -31,4 +31,4 @@ package-lock.json
 configToken.json
 authConfigToken.ts
 
-
+config_secret.yaml
