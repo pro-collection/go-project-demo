@@ -18,14 +18,19 @@ func setupSetting() error {
 		return err
 	}
 
-	// 初始化
-	configList := [...]string{"Service", "App", "Database"}
+	err = setting.ReadSection("Server", &global.ServerSetting)
+	if err != nil {
+		return err
+	}
 
-	for _, value := range configList {
-		err = setting.ReadSection(value, &global.ServerSetting)
-		if err != nil {
-			return err
-		}
+	err = setting.ReadSection("App", &global.AppSetting)
+	if err != nil {
+		return err
+	}
+
+	err = setting.ReadSection("Database", &global.DatabaseSetting)
+	if err != nil {
+		return err
 	}
 
 	global.ServerSetting.ReadTimeout *= time.Second
@@ -45,6 +50,8 @@ func main() {
 	// 设置启动模式
 	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()
+
+	log.Println("yanle - port: ", fmt.Sprintf(":%s", global.ServerSetting.HttpPort))
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%s", global.ServerSetting.HttpPort),

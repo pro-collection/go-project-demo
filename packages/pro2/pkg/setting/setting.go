@@ -11,7 +11,7 @@ func NewSetting() (*Setting, error) {
 
 	vp.SetConfigName("config")
 	vp.SetConfigType("yaml")
-	vp.AddConfigPath("configs")
+	vp.AddConfigPath("packages/pro2/configs")
 
 	err := vp.ReadInConfig()
 
