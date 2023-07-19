@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-project-demo/packages/pro2/global"
+	"go-project-demo/packages/pro2/internal/model"
 	"go-project-demo/packages/pro2/internal/routers"
 	setting2 "go-project-demo/packages/pro2/pkg/setting"
 	"log"
@@ -35,6 +36,17 @@ func setupSetting() error {
 
 	global.ServerSetting.ReadTimeout *= time.Second
 	global.ServerSetting.WriteTimeout *= time.Second
+
+	return nil
+}
+
+// 初始化数据库连接
+func setupDBEngin() error {
+	var err error
+	global.DBEngin, err = model.NewDBEngine(global.DatabaseSetting)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
