@@ -28,7 +28,7 @@ func setupSetting() error {
 		return err
 	}
 
-	err = setting.ReadSection("Database", &global.DatabaseSetting)
+	err = setting.ReadSectionWithSecret("Database", &global.DatabaseSetting)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func main() {
 	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()
 
-	log.Println("yanle - port: ", fmt.Sprintf(":%s", global.ServerSetting.HttpPort))
+	log.Println("yanle - info: ", global.DatabaseSetting)
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%s", global.ServerSetting.HttpPort),
