@@ -2,12 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"go-project-demo/packages/pro2/global"
 	"go-project-demo/packages/pro2/internal/model"
+	"go-project-demo/packages/pro2/internal/routers"
 	"go-project-demo/packages/pro2/pkg/logger"
 	setting2 "go-project-demo/packages/pro2/pkg/setting"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
+	"net/http"
 	"time"
 )
 
@@ -78,20 +81,20 @@ func init() {
 
 func main() {
 	// 设置启动模式
-	//gin.SetMode(global.ServerSetting.RunMode)
-	//router := routers.NewRouter()
-	//
-	//log.Println("yanle - info: ", global.DatabaseSetting)
-	//
-	//s := &http.Server{
-	//	Addr:           fmt.Sprintf(":%s", global.ServerSetting.HttpPort),
-	//	Handler:        router,
-	//	ReadTimeout:    global.ServerSetting.ReadTimeout,
-	//	WriteTimeout:   global.ServerSetting.WriteTimeout,
-	//	MaxHeaderBytes: 1 << 20,
-	//}
-	//
-	//_ = s.ListenAndServe()
+	gin.SetMode(global.ServerSetting.RunMode)
+	router := routers.NewRouter()
+
+	log.Println("yanle - info: ", global.DatabaseSetting)
+
+	s := &http.Server{
+		Addr:           fmt.Sprintf(":%s", global.ServerSetting.HttpPort),
+		Handler:        router,
+		ReadTimeout:    global.ServerSetting.ReadTimeout,
+		WriteTimeout:   global.ServerSetting.WriteTimeout,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	_ = s.ListenAndServe()
 
 	//global.Logger.Infof("%s: go/%s", "yanle", "base")
 
