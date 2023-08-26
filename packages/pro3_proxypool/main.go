@@ -24,4 +24,5 @@ func main() {
 	}
 
 	fmt.Println("path： ", filePath)
+	//fmt.Println("console", strings.Split("console", ","))
 }

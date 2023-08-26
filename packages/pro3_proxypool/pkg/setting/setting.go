@@ -2,6 +2,8 @@ package setting
 
 import (
 	"github.com/go-ini/ini"
+	"go-project-demo/packages/pro3_proxypool/pkg/consts"
+	"go-project-demo/packages/pro3_proxypool/pkg/utils"
 	"os"
 	"os/exec"
 	"path"
@@ -126,4 +128,75 @@ func NewContext() {
 	AppAddr = sec.Key("HTTP_ADDR").MustString("0.0.0.0")
 	AppPort = sec.Key("HTTP_PORT").MustString("3001")
 	SessionExpires = sec.Key("SESSION_EXPIRES").MustDuration(time.Hour * 24 * 7)
+}
+
+func validateFunc(v string) string {
+	if utils.IncludesWithString(consts.ValidLevels, v) {
+		return v
+	}
+	return "trice"
+}
+
+// NewLogService 初始化日志
+func NewLogService() {
+	// 通过开发环境，获取日志的级别
+	if DebugMode {
+		LogModes = strings.Split("console", ",")
+	} else {
+		LogModes = strings.Split(Cfg.Section("log").Key("mode").MustString("console"), ",")
+	}
+
+	for _, mode := range LogModes {
+		mode = strings.ToLower(strings.TrimSpace(mode))
+		currentMode := "log." + mode
+		sec, err := Cfg.GetSection(currentMode)
+		if err != nil {
+			clog.Fatal("Unknown logger mode: %s", mode)
+		}
+
+		name := Cfg.Section(currentMode).Key("LEVEL").Validate(validateFunc)
+
+		// 日志级别
+		level := consts.LevelNames[name]
+
+		// 只支持一下两种模式， 可以自行扩展
+		switch mode {
+		case "console":
+			BufferSize := Cfg.Section("log").Key("BUFFER_LEN").MustInt64(100)
+			err = clog.NewConsole(
+				BufferSize,
+				clog.ConsoleConfig{
+					Level: level,
+				},
+			)
+			if err != nil {
+				clog.Warn("unable to create new logger: " + err.Error())
+			}
+			break
+		case "file":
+			// 日志写入到文件
+			logPath := path.Join(LogRootPath, "ProxyPool.log")
+			err = os.MkdirAll(path.Dir(logPath), os.ModePerm)
+			if err != nil {
+				clog.Warn("Fail to create log directory '%s': %v", path.Dir(logPath), err)
+			}
+
+			err = clog.NewFile(clog.FileConfig{
+				Level:    level,
+				Filename: logPath,
+				FileRotationConfig: clog.FileRotationConfig{
+					Rotate:   sec.Key("LOG_ROTATE").MustBool(true),
+					Daily:    sec.Key("DAILY_ROTATE").MustBool(true),
+					MaxSize:  1 << uint(sec.Key("MAX_SIZE_SHIFT").MustInt(28)),
+					MaxLines: sec.Key("MAX_LINES").MustInt64(1000000),
+					MaxDays:  sec.Key("MAX_DAYS").MustInt64(7),
+				},
+			})
+		}
+
+		clog.Trace("Log Mode: %s (%s)", utils.GetTitle(mode), utils.GetTitle(name))
+	}
+
+	// Make sure everyone gets version info printed.
+	clog.Info("%s %s", AppName, AppVer)
 }
