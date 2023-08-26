@@ -25,4 +25,7 @@ func main() {
 
 	fmt.Println("path： ", filePath)
 	//fmt.Println("console", strings.Split("console", ","))
+
+	// todo yanlele 虽然配置完成， 但是读取配置好像有点儿问题
+	//fmt.Println("LogRootPath: ", setting.Cfg.Section("log").Key("ROOT_PATH").MustString(""))
 }
