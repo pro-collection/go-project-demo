@@ -13,3 +13,8 @@ var LevelNames = map[string]clog.Level{
 	"error": clog.LevelError,
 	"fatal": clog.LevelFatal,
 }
+
+var EnvMode = envModeStruct{
+	Dev:  "dev",
+	Prod: "prod",
+}

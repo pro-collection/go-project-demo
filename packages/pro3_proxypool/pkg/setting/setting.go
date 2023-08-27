@@ -25,11 +25,12 @@ var (
 	AppPath string
 	AppAddr string
 	AppPort string
+	DevMode string
 
 	/*
 		Global setting objects
 	*/
-	Cfg       *ini.File
+	Config    *ini.File
 	DebugMode bool
 	IsWindows bool
 	ConfFile  string
@@ -73,6 +74,7 @@ func execPath() (string, error) {
 
 func init() {
 	IsWindows = runtime.GOOS == "windows"
+
 	//var err error
 	exePath, err := os.Getwd()
 	if err != nil {
@@ -123,7 +125,7 @@ func NewContext() {
 	ConfFile = path.Join(AppPath, "conf/app.ini")
 
 	// 读取配置
-	Cfg, err = ini.Load(ConfFile)
+	Config, err = ini.Load(ConfFile)
 
 	if err != nil {
 		panic(err)
@@ -132,14 +134,14 @@ func NewContext() {
 
 	// 配置名称转换， 全部都转换诶大写
 	// 具体可以参考这篇文档： https://github.com/yanlele/golang-index/issues/4
-	Cfg.NameMapper = ini.SnackCase
+	Config.NameMapper = ini.SnackCase
 
 	// Load security config
-	InstallLock = Cfg.Section("security").Key("INSTALL_LOCK").MustBool(false)
+	InstallLock = Config.Section("security").Key("INSTALL_LOCK").MustBool(false)
 
 	// Load server config
-	sec := Cfg.Section("server")
-	AppName = Cfg.Section("").Key("APP_NAME").MustString("ProxyPool")
+	sec := Config.Section("server")
+	AppName = Config.Section("").Key("APP_NAME").MustString("ProxyPool")
 	AppURL = sec.Key("ROOT_URL").MustString("http://localhost:3000/")
 	if AppURL[len(AppURL)-1] != '/' {
 		AppURL += "/"
@@ -147,6 +149,9 @@ func NewContext() {
 	AppAddr = sec.Key("HTTP_ADDR").MustString("0.0.0.0")
 	AppPort = sec.Key("HTTP_PORT").MustString("3001")
 	SessionExpires = sec.Key("SESSION_EXPIRES").MustDuration(time.Hour * 24 * 7)
+
+	// 获取开发环境
+	DevMode = Config.Section("").Key("MODE").MustString(consts.EnvMode.Dev)
 }
 
 func validateFunc(v string) string {
@@ -162,18 +167,18 @@ func NewLogService() {
 	if DebugMode {
 		LogModes = strings.Split("console", ",")
 	} else {
-		LogModes = strings.Split(Cfg.Section("log").Key("mode").MustString("console"), ",")
+		LogModes = strings.Split(Config.Section("log").Key("mode").MustString("console"), ",")
 	}
 
 	for _, mode := range LogModes {
 		mode = strings.ToLower(strings.TrimSpace(mode))
 		currentMode := "log." + mode
-		sec, err := Cfg.GetSection(currentMode)
+		sec, err := Config.GetSection(currentMode)
 		if err != nil {
 			clog.Fatal("Unknown logger mode: %s", mode)
 		}
 
-		name := Cfg.Section(currentMode).Key("LEVEL").Validate(validateFunc)
+		name := Config.Section(currentMode).Key("LEVEL").Validate(validateFunc)
 
 		// 日志级别
 		level := consts.LevelNames[name]
@@ -181,7 +186,7 @@ func NewLogService() {
 		// 只支持一下两种模式， 可以自行扩展
 		switch mode {
 		case "console":
-			//bufferSize := Cfg.Section("log").Key("BUFFER_LEN").MustInt64(10000)
+			//bufferSize := Config.Section("log").Key("BUFFER_LEN").MustInt64(10000)
 			err = clog.NewConsole(
 				//100,
 				clog.ConsoleConfig{
