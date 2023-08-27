@@ -2,17 +2,20 @@ package main
 
 import (
 	"fmt"
-	"runtime"
+	"os"
 )
 
 func main() {
-	myFunc()
-}
+	env := os.Args[1]
 
-func myFunc() {
-	pc, _, _, ok := runtime.Caller(1)
-	if ok {
-		f := runtime.FuncForPC(pc)
-		fmt.Println("调用的函数名称：", f.Name())
-	}
+	fmt.Println("程序名称:", env)
+
+	//if len(args) > 1 {
+	//	fmt.Println("启动参数:")
+	//	for i, arg := range args[1:] {
+	//		fmt.Printf("%d: %s\n", i+1, arg)
+	//	}
+	//} else {
+	//	fmt.Println("没有启动参数.")
+	//}
 }

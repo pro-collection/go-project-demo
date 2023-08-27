@@ -12,8 +12,7 @@ import (
 	"runtime"
 	"strings"
 	"time"
-
-	clog "unknwon.dev/clog/v2"
+	"unknwon.dev/clog/v2"
 )
 
 var (
@@ -70,32 +69,47 @@ func execPath() (string, error) {
 		return "", err
 	}
 
-	return filepath.Abs(file)
+	path, err := filepath.Abs(file)
+	return path, err
 }
 
 func init() {
 	IsWindows = runtime.GOOS == "windows"
 
-	//var err error
-	exePath, err := os.Getwd()
-	if err != nil {
-		fmt.Println("Failed to get executable path:", err)
-		return
+	args := os.Args
+	var env string
+
+	for index, arg := range args {
+		if index == 1 {
+			env = arg
+		}
 	}
 
-	exeDir := filepath.Dir(exePath)
-	absExeDir, err := filepath.Abs(exeDir)
-	if err != nil {
-		fmt.Println("Failed to get absolute executable directory:", err)
-		return
-	}
-	AppPath = absExeDir + "/go-project-demo/packages/pro3_proxypool"
+	var err error
 
-	// 这个场景是提供给外部使用场景
-	//AppPath, err = execPath()
-	//if err != nil {
-	//	clog.Fatal("Fail to get app path: %v\n", err)
-	//}
+	if env == "dev" {
+		//var err error
+		exePath, err := os.Getwd()
+		if err != nil {
+			fmt.Println("Failed to get executable path:", err)
+			return
+		}
+
+		exeDir := filepath.Dir(exePath)
+		absExeDir, err := filepath.Abs(exeDir)
+		if err != nil {
+			fmt.Println("Failed to get absolute executable directory:", err)
+			return
+		}
+
+		AppPath = absExeDir + "/go-project-demo/packages/pro3_proxypool"
+	} else {
+		//这个场景是提供给外部使用场景
+		AppPath, err = execPath()
+		if err != nil {
+			fmt.Printf("Fail to get app path: %v\n", err)
+		}
+	}
 }
 
 // WorkDir 获取工作区地址
@@ -129,8 +143,15 @@ func NewContext() {
 	Config, err = ini.Load(ConfFile)
 
 	if err != nil {
+		//logger.Fatal(logger.Params{
+		//	Key:      logger.Key.GetConfigFail,
+		//	ModeName: "setting",
+		//	FuncName: "NewContext",
+		//	Content:  "初始化配置失败, 请检测文件路径是否存在, 请检测路径下配置是否合法",
+		//	Extend:   fmt.Sprintf("Fail to parse %s: %v", ConfFile, err),
+		//})
+		fmt.Println(fmt.Sprintf("Fail to parse %s: %v", ConfFile, err))
 		panic(err)
-		//clog.Fatal("Fail to parse %s: %v", ConfFile, err)
 	}
 
 	// 配置名称转换， 全部都转换诶大写

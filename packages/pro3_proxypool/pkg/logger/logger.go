@@ -5,16 +5,30 @@ import (
 	"unknwon.dev/clog/v2"
 )
 
-type Params struct {
-	Key      string
-	ModeName string
-	FuncName string
-	Content  string
-	Error    error
-}
-
 func getParams(params Params) string {
-	str := fmt.Sprintf("[%s] %s.%s - %s", params.Key, params.ModeName, params.FuncName, params.Content)
+	var str string
+
+	if params.Extend != nil {
+		str = fmt.Sprintf(
+			"[%s] %s.%s - %s | extned info: %s",
+			params.Key,
+			params.ModeName,
+			params.FuncName,
+			params.Content,
+			params.Extend,
+		)
+
+		return str
+	}
+
+	str = fmt.Sprintf(
+		"[%s] %s.%s - %s",
+		params.Key,
+		params.ModeName,
+		params.FuncName,
+		params.Content,
+	)
+
 	return str
 }
 

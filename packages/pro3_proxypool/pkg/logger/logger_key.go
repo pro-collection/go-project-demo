@@ -5,4 +5,5 @@ var Key = loggerKeyStruct{
 	UnknownLoggerMode: "unknown logger mode",
 	LoggerMode:        "logger mode",
 	AppInfo:           "app info",
+	GetConfigFail:     "GetConfigFail",
 }
