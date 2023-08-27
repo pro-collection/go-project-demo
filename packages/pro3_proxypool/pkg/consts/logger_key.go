@@ -1,5 +1,5 @@
 package consts
 
-var LoggerKey = loggerKey{
+var LoggerKey = LoggerKeyStruct{
 	Path: "yanle_logger_path",
 }
