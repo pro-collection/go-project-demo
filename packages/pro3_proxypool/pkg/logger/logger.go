@@ -6,15 +6,15 @@ import (
 )
 
 type Params struct {
-	LoggerKey string
-	ModeName  string
-	FuncName  string
-	Content   string
-	Error     error
+	Key      string
+	ModeName string
+	FuncName string
+	Content  string
+	Error    error
 }
 
 func getParams(params Params) string {
-	str := fmt.Sprintf("[%s] %s.%s - %s", params.LoggerKey, params.ModeName, params.FuncName, params.Content)
+	str := fmt.Sprintf("[%s] %s.%s - %s", params.Key, params.ModeName, params.FuncName, params.Content)
 	return str
 }
 

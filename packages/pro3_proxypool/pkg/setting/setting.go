@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/go-ini/ini"
 	"go-project-demo/packages/pro3_proxypool/pkg/consts"
+	"go-project-demo/packages/pro3_proxypool/pkg/logger"
 	"go-project-demo/packages/pro3_proxypool/pkg/utils"
 	"os"
 	"path"
@@ -175,7 +176,12 @@ func NewLogService() {
 		currentMode := "log." + mode
 		sec, err := Config.GetSection(currentMode)
 		if err != nil {
-			clog.Fatal("Unknown logger mode: %s", mode)
+			logger.Fatal(logger.Params{
+				Key:      logger.Key.UnknownLoggerMode,
+				ModeName: "setting",
+				FuncName: "NewLogService",
+				Content:  fmt.Sprintf("Unknown logger mode: %s", mode),
+			})
 		}
 
 		name := Config.Section(currentMode).Key("LEVEL").Validate(validateFunc)
@@ -193,7 +199,6 @@ func NewLogService() {
 					Level: level,
 				},
 			)
-			clog.Warn("yanle  测试 日志")
 			if err != nil {
 				clog.Warn("unable to create new logger: " + err.Error())
 			}
@@ -219,9 +224,19 @@ func NewLogService() {
 			})
 		}
 
-		clog.Trace("Log Mode: %s (%s)", utils.GetTitle(mode), utils.GetTitle(name))
+		logger.Info(logger.Params{
+			Key:      logger.Key.LoggerMode,
+			ModeName: "setting",
+			FuncName: "NewLogService",
+			Content:  fmt.Sprintf("Log Mode: %s (%s)", utils.GetTitle(mode), utils.GetTitle(name)),
+		})
 	}
 
 	// Make sure everyone gets version info printed.
-	clog.Info("%s %s", AppName, AppVer)
+	logger.Info(logger.Params{
+		Key:      logger.Key.AppInfo,
+		ModeName: "setting",
+		FuncName: "NewLogService",
+		Content:  fmt.Sprintf("app_name: %s, app_version: %s", AppName, AppVer),
+	})
 }
