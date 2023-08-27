@@ -1,10 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"go-project-demo/packages/pro3_proxypool/pkg/consts"
+	"go-project-demo/packages/pro3_proxypool/pkg/initial"
+	"go-project-demo/packages/pro3_proxypool/pkg/setting"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"unknwon.dev/clog/v2"
 )
 
 // execPath returns the executable path.
@@ -16,16 +19,25 @@ func execPath() (string, error) {
 	return filepath.Abs(file)
 }
 
+func deferExec() {
+	defer clog.Stop()
+}
+
 func main() {
+	// 初始化
+	initial.GlobalInit()
+
 	filePath, err := execPath()
 
 	if err != nil {
 		return
 	}
 
-	fmt.Println("path： ", filePath)
+	clog.Trace("path： ", filePath)
 	//fmt.Println("console", strings.Split("console", ","))
 
 	// todo yanlele 虽然配置完成， 但是读取配置好像有点儿问题
-	//fmt.Println("LogRootPath: ", setting.Cfg.Section("log").Key("ROOT_PATH").MustString(""))
+	clog.Trace(consts.LoggerKey.Path, setting.Cfg.Section("log").Key("ROOT_PATH").MustString(""))
+
+	deferExec()
 }

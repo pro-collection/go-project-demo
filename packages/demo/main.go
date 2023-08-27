@@ -1,32 +1,41 @@
 package main
 
 import (
-	"context"
-	"gopkg.in/natefinch/lumberjack.v2"
-	"log"
+	"fmt"
+	"unknwon.dev/clog/v2"
 )
 
-type Logger interface {
-	Debug(msg string, field map[string]interface{})
-	Info(msg string, field map[string]interface{})
-	Warn(msg string, field map[string]interface{})
-	Error(msg string, field map[string]interface{})
-	Fatal(msg string, field map[string]interface{})
-}
+/*
+err = clog.NewConsole(
+				//100,
+				clog.ConsoleConfig{
+					Level: level,
+				},
+			)
+			clog.Warn("yanle  测试 日志")
+			if err != nil {
+				clog.Warn("unable to create new logger: " + err.Error())
+			}
+*/
 
 func main() {
+	var bufferSize = 100
+	err := clog.NewConsole(
+		bufferSize,
+		clog.ConsoleConfig{
+			Level: clog.LevelTrace,
+		},
+	)
+	clog.Warn("yanle  测试 日志")
+	if err != nil {
+		clog.Warn("unable to create new logger: " + err.Error())
+	}
+	if err != nil {
+		fmt.Println("Failed to initialize logger:", err)
+		return
+	}
 
-	log.SetOutput(&lumberjack.Logger{
-		Filename:   "./foo.log",
-		MaxSize:    500, // megabytes
-		MaxBackups: 3,
-		MaxAge:     28,    //days
-		Compress:   false, // disabled by default
-	})
+	defer clog.Stop()
 
-	parentContext := context.Background()
-
-	ctx := context.WithValue(parentContext, "key", "value")
-
-	log.Println("demo", ctx.Value("key"))
+	clog.Trace("This is a trace log")
 }
