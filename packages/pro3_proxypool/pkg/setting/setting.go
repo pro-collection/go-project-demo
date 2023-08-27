@@ -63,52 +63,35 @@ var (
 
 // execPath
 // 获取可执行的 path
-func execPath() (string, error) {
-	file, err := os.Getwd()
+// 如果出现了位置信息读取失败的情况， 直接终止程序即可
+func execPath() string {
+	exePath, err := os.Getwd()
 	if err != nil {
-		return "", err
+		fmt.Println("Failed to get executable path:", err)
+		panic(err)
 	}
 
-	path, err := filepath.Abs(file)
-	return path, err
+	exeDir := filepath.Dir(exePath)
+	absExeDir, err := filepath.Abs(exeDir)
+	if err != nil {
+		fmt.Println("Failed to get absolute executable directory:", err)
+		panic(err)
+	}
+
+	return absExeDir
 }
 
 func init() {
 	IsWindows = runtime.GOOS == "windows"
 
-	args := os.Args
-	var env string
+	env, _ := utils.GetEnv("env")
 
-	for index, arg := range args {
-		if index == 1 {
-			env = arg
-		}
-	}
-
-	var err error
-
-	if env == "dev" {
-		//var err error
-		exePath, err := os.Getwd()
-		if err != nil {
-			fmt.Println("Failed to get executable path:", err)
-			return
-		}
-
-		exeDir := filepath.Dir(exePath)
-		absExeDir, err := filepath.Abs(exeDir)
-		if err != nil {
-			fmt.Println("Failed to get absolute executable directory:", err)
-			return
-		}
-
+	if env == consts.EnvMode.Dev {
+		absExeDir := execPath()
 		AppPath = absExeDir + "/go-project-demo/packages/pro3_proxypool"
 	} else {
 		//这个场景是提供给外部使用场景
-		AppPath, err = execPath()
-		if err != nil {
-			fmt.Printf("Fail to get app path: %v\n", err)
-		}
+		AppPath = execPath()
 	}
 }
 

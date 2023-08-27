@@ -1,21 +1,14 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
+import "fmt"
+
+type paramsType = map[string]string
 
 func main() {
-	env := os.Args[1]
+	params := make(paramsType)
 
-	fmt.Println("程序名称:", env)
+	params["name"] = "yanle"
 
-	//if len(args) > 1 {
-	//	fmt.Println("启动参数:")
-	//	for i, arg := range args[1:] {
-	//		fmt.Printf("%d: %s\n", i+1, arg)
-	//	}
-	//} else {
-	//	fmt.Println("没有启动参数.")
-	//}
+	res := params["age"]
+	fmt.Println(res)
 }
