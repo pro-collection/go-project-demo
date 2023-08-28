@@ -20,6 +20,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.14.1 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
+	github.com/go-xorm/xorm v0.7.9 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -54,4 +55,6 @@ require (
 	gorm.io/driver/mysql v1.5.1 // indirect
 	gorm.io/gorm v1.25.2 // indirect
 	unknwon.dev/clog/v2 v2.2.0 // indirect
+	xorm.io/builder v0.3.13 // indirect
+	xorm.io/core v0.7.3 // indirect
 )
