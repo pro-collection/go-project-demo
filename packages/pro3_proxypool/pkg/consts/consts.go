@@ -18,3 +18,10 @@ var EnvMode = envModeStruct{
 	Dev:  "dev",
 	Prod: "prod",
 }
+
+var DBType = dbTypeStruct{
+	Sqlite3:  "sqlite3",
+	Mysql:    "mysql",
+	Postgres: "postgres",
+	Mssql:    "mssql",
+}

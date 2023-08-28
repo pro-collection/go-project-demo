@@ -206,7 +206,6 @@ func NewLogService() {
 			if err != nil {
 				clog.Warn("unable to create new logger: " + err.Error())
 			}
-			break
 		case "file":
 			// 日志写入到文件
 			logPath := path.Join(LogRootPath, "ProxyPool.log")

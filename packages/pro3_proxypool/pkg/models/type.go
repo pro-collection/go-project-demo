@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/go-xorm/xorm"
 	"time"
 )
 
@@ -19,11 +18,3 @@ type IP struct {
 type DBConfigStruct struct {
 	Type, Host, Name, User, Password, Path, SSLMode string
 }
-
-var (
-	X             *xorm.Engine
-	tables        []interface{}
-	HasEngin      bool
-	DBConfig      DBConfigStruct
-	EnableSQLite3 bool
-)
