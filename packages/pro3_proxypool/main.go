@@ -2,6 +2,7 @@ package main
 
 import (
 	"go-project-demo/packages/pro3_proxypool/pkg/initial"
+	"runtime"
 	"unknwon.dev/clog/v2"
 )
 
@@ -12,6 +13,10 @@ func deferExec() {
 func main() {
 	// 初始化
 	initial.GlobalInit()
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
+
+	//ipChan := make(chan *models.IP, 2000)
 
 	deferExec()
 }

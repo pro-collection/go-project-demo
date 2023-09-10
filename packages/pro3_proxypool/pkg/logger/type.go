@@ -11,6 +11,7 @@ type loggerKeyStruct struct {
 	BaseInfo          string
 	FatalInfo         string
 	ErrorInfo         string
+	WarnInfo          string
 }
 
 type Params struct {

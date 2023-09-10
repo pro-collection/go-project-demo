@@ -10,4 +10,5 @@ var Key = loggerKeyStruct{
 	BaseInfo:          "BaseInfo",
 	FatalInfo:         "FatalInfo",
 	ErrorInfo:         "ErrorInfo",
+	WarnInfo:          "WarnInfo",
 }
