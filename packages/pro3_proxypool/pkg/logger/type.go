@@ -7,6 +7,10 @@ type loggerKeyStruct struct {
 	LoggerMode        string
 	AppInfo           string
 	GetConfigFail     string
+	InitORMEnginError string
+	BaseInfo          string
+	FatalInfo         string
+	ErrorInfo         string
 }
 
 type Params struct {

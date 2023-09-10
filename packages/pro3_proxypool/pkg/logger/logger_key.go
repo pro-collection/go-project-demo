@@ -6,4 +6,8 @@ var Key = loggerKeyStruct{
 	LoggerMode:        "logger mode",
 	AppInfo:           "app info",
 	GetConfigFail:     "GetConfigFail",
+	InitORMEnginError: "InitORMEnginError",
+	BaseInfo:          "BaseInfo",
+	FatalInfo:         "FatalInfo",
+	ErrorInfo:         "ErrorInfo",
 }
