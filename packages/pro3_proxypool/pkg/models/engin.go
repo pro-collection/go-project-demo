@@ -5,10 +5,13 @@ import (
 	"fmt"
 	"github.com/go-xorm/xorm"
 	"go-project-demo/packages/pro3_proxypool/pkg/consts"
+	"go-project-demo/packages/pro3_proxypool/pkg/setting"
 	"net/url"
 	"os"
 	"path"
 	"strings"
+	"unknwon.dev/clog/v2"
+	"xorm.io/core"
 )
 
 func parseHostPort(host string) (ip string, port string) {
@@ -77,4 +80,39 @@ func getEngine() (*xorm.Engine, error) {
 	}
 
 	return xorm.NewEngine(DBConfig.Type, connStr)
+}
+
+func SetEngine() (err error) {
+	x, err = getEngine()
+	if err != nil {
+		return fmt.Errorf("Fail to connect to database: %v", err)
+	}
+
+	x.SetMapper(core.GonicMapper{})
+
+	// todo yanlele 这个可能什么都获取不到
+	sec := setting.Config.Section("log.xorm")
+	logger, err := clog.NewFileWriter(
+		path.Join(setting.LogRootPath, "xorm.log"),
+		clog.FileRotationConfig{
+			Rotate:  sec.Key("ROTATE").MustBool(true),
+			Daily:   sec.Key("ROTATE_DAILY").MustBool(true),
+			MaxSize: sec.Key("MAX_SIZE").MustInt64(100) * 1024 * 1024,
+			MaxDays: sec.Key("MAX_DAYS").MustInt64(3),
+		},
+	)
+
+	if err != nil {
+		return fmt.Errorf("Fail to create 'xorm.log': %v", err)
+	}
+
+	if !setting.DebugMode {
+		x.SetLogger(xorm.NewSimpleLogger3(logger, xorm.DEFAULT_LOG_PREFIX, xorm.DEFAULT_LOG_FLAG, core.LOG_WARNING))
+	} else {
+		x.SetLogger(xorm.NewSimpleLogger(logger))
+	}
+
+	x.ShowSQL(true)
+
+	return nil
 }

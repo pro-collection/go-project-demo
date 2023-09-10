@@ -11,9 +11,4 @@ func GlobalInit() {
 
 	models.LoadDataBaseInfo()
 
-	//if setting.InstallLock {
-	//	if  {
-	//
-	//	}
-	//}
 }
