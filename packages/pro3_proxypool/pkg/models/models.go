@@ -24,10 +24,6 @@ func init() {
 	}
 }
 
-//func SetEngin() (err error) {
-//	//x, err = geten
-//}
-
 // LoadDataBaseInfo .
 func LoadDataBaseInfo() {
 	sec := setting.Config.Section("database")

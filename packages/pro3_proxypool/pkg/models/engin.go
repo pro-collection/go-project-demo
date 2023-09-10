@@ -82,10 +82,22 @@ func getEngine() (*xorm.Engine, error) {
 	return xorm.NewEngine(DBConfig.Type, connStr)
 }
 
+func NewTextEngin(x *xorm.Engine) (err error) {
+	x, err = getEngine()
+
+	if err != nil {
+		return fmt.Errorf("connect to database : %v", err)
+	}
+
+	x.SetMapper(core.GonicMapper{})
+
+	return x.StoreEngine("InnoDB").Sync2(tables...)
+}
+
 func SetEngine() (err error) {
 	x, err = getEngine()
 	if err != nil {
-		return fmt.Errorf("Fail to connect to database: %v", err)
+		return fmt.Errorf("fail to connect to database: %v", err)
 	}
 
 	x.SetMapper(core.GonicMapper{})
@@ -103,7 +115,7 @@ func SetEngine() (err error) {
 	)
 
 	if err != nil {
-		return fmt.Errorf("Fail to create 'xorm.log': %v", err)
+		return fmt.Errorf("fail to create 'xorm.log': %v", err)
 	}
 
 	if !setting.DebugMode {
@@ -113,6 +125,18 @@ func SetEngine() (err error) {
 	}
 
 	x.ShowSQL(true)
+
+	return nil
+}
+
+func NewEngine() (err error) {
+	if err = SetEngine(); err != nil {
+		return err
+	}
+
+	if err = x.StoreEngine("InnoDB").Sync2(tables...); err != nil {
+		return fmt.Errorf("sysnc databse struct error: %v", err)
+	}
 
 	return nil
 }
