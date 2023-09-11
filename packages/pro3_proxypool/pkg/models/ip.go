@@ -69,3 +69,8 @@ func FindAll(value string) ([]*IP, error) {
 
 	return tempIp, nil
 }
+
+func CountIps() int64 {
+	count, _ := x.Where("id>=?", 0).Count(new(IP))
+	return count
+}

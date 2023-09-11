@@ -1,17 +1,22 @@
 package main
 
-import "fmt"
+type Person struct {
+	Name string
+	Age  int
+}
 
-type paramsType = map[string]string
+type Employee struct {
+	Name     string
+	Age      int
+	JobTitle string
+}
 
 func main() {
-	params := make(paramsType)
+	person := Person{
+		Name: "John",
+		Age:  30,
+	}
 
-	params["name"] = "yanle"
-
-	go func() {
-		res := params["age"]
-		fmt.Println(res)
-	}()
+	employee := Employee(person)
 
 }

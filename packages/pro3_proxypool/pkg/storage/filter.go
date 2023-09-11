@@ -5,6 +5,7 @@ import (
 	"go-project-demo/packages/pro3_proxypool/pkg/logger"
 	"go-project-demo/packages/pro3_proxypool/pkg/models"
 	"go-project-demo/packages/pro3_proxypool/pkg/utils"
+	"sync"
 )
 
 func ProxyRandom() (ip *models.IP) {
@@ -67,4 +68,42 @@ func ProxyFind(value string) (ip *models.IP) {
 
 	randomNum := utils.RandInt(0, x)
 	return ips[randomNum]
+}
+
+func CheckProxyDB() {
+	loggerParams := &logger.Params{
+		Key:      logger.Key.BaseInfo,
+		ModeName: "storage",
+		FuncName: "CheckProxyDB",
+	}
+
+	x := models.CountIps()
+	loggerParams.Content = fmt.Sprintf("Before check, DB has: %d records.", x)
+	logger.Info(loggerParams)
+
+	ips, err := models.GetAll()
+
+	if err != nil {
+		loggerParams.Key = logger.Key.WarnInfo
+		loggerParams.Content = err.Error()
+		logger.Warn(loggerParams)
+	}
+
+	var wg sync.WaitGroup
+
+	for _, value := range ips {
+		wg.Add(1)
+		go func(v *models.IP) {
+			// todo yanlele CheckIP
+			// todo yanlele ProxyDel
+		}(value)
+	}
+
+	wg.Wait()
+
+	x = models.CountIps()
+
+	loggerParams.Key = logger.Key.BaseInfo
+	loggerParams.Content = fmt.Sprintf("After check, DB has: %d records.", x)
+	logger.Info(loggerParams)
 }
