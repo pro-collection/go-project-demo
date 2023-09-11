@@ -12,7 +12,7 @@ func ProxyRandom() (ip *models.IP) {
 
 	x := len(ips)
 
-	var loggerParams = logger.Params{
+	var loggerParams = &logger.Params{
 		Key:      logger.Key.BaseInfo,
 		ModeName: "storage",
 		FuncName: "ProxyRandom",
@@ -29,5 +29,32 @@ func ProxyRandom() (ip *models.IP) {
 
 	randomNum := utils.RandInt(0, x)
 
+	return ips[randomNum]
+}
+
+func ProxyFind(value string) (ip *models.IP) {
+	ips, err := models.FindAll(value)
+	if err != nil {
+		logger.Warn(&logger.Params{
+			Key:      logger.Key.WarnInfo,
+			ModeName: "storage",
+			FuncName: "ProxyFind",
+			Content:  err.Error(),
+		})
+		return models.NewIp()
+	}
+
+	x := len(ips)
+	if x == 0 {
+		logger.Warn(&logger.Params{
+			Key:      logger.Key.WarnInfo,
+			ModeName: "storage",
+			FuncName: "ProxyFind",
+			Content:  err.Error(),
+		})
+		return models.NewIp()
+	}
+
+	randomNum := utils.RandInt(0, x)
 	return ips[randomNum]
 }

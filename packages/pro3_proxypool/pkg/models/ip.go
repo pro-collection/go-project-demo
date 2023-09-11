@@ -54,7 +54,7 @@ func FindAll(value string) ([]*IP, error) {
 		}
 		err := x.Where("speed <= 1000 and type1=?", value).Find(&tempIp)
 		if err != nil {
-			logger.Error(logger.Params{
+			logger.Error(&logger.Params{
 				Key:      logger.Key.ErrorInfo,
 				ModeName: "models",
 				FuncName: "FindAll",

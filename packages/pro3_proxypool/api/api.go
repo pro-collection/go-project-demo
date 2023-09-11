@@ -2,6 +2,8 @@ package api
 
 import (
 	"encoding/json"
+	"go-project-demo/packages/pro3_proxypool/pkg/logger"
+	"go-project-demo/packages/pro3_proxypool/pkg/setting"
 	"go-project-demo/packages/pro3_proxypool/pkg/storage"
 	"net/http"
 )
@@ -9,10 +11,19 @@ import (
 // VERSION for this program
 const VERSION = "/v2"
 
+// Run 启动服务
 func Run() {
-	//mux := http.NewServeMux()
+	mux := http.NewServeMux()
 
-	//mux.Handler(VERSION + "/pi", )
+	mux.HandleFunc(VERSION+"/pi", ProxyHandler)
+	mux.HandleFunc(VERSION+"/https", FindHandler)
+	logger.Info(&logger.Params{
+		Key:      logger.Key.BaseInfo,
+		ModeName: "api",
+		FuncName: "Run",
+		Content:  "starting server: " + setting.AppAddr + ":" + setting.AppPort,
+	})
+	http.ListenAndServe(setting.AppAddr+":"+setting.AppPort, mux)
 }
 
 func ProxyHandler(w http.ResponseWriter, r *http.Request) {

@@ -3,10 +3,8 @@ package setting
 import (
 	"fmt"
 	"github.com/go-ini/ini"
-	"github.com/go-xorm/xorm"
 	"go-project-demo/packages/pro3_proxypool/pkg/consts"
 	"go-project-demo/packages/pro3_proxypool/pkg/logger"
-	"go-project-demo/packages/pro3_proxypool/pkg/models"
 	"go-project-demo/packages/pro3_proxypool/pkg/utils"
 	"os"
 	"path"
@@ -128,13 +126,6 @@ func NewContext() {
 	Config, err = ini.Load(ConfFile)
 
 	if err != nil {
-		//logger.Fatal(logger.Params{
-		//	Key:      logger.Key.GetConfigFail,
-		//	ModeName: "setting",
-		//	FuncName: "NewContext",
-		//	Content:  "初始化配置失败, 请检测文件路径是否存在, 请检测路径下配置是否合法",
-		//	Extend:   fmt.Sprintf("Fail to parse %s: %v", ConfFile, err),
-		//})
 		fmt.Println(fmt.Sprintf("Fail to parse %s: %v", ConfFile, err))
 		panic(err)
 	}
@@ -182,7 +173,7 @@ func NewLogService() {
 		currentMode := "log." + mode
 		sec, err := Config.GetSection(currentMode)
 		if err != nil {
-			logger.Fatal(logger.Params{
+			logger.Fatal(&logger.Params{
 				Key:      logger.Key.UnknownLoggerMode,
 				ModeName: "setting",
 				FuncName: "NewLogService",
@@ -229,7 +220,7 @@ func NewLogService() {
 			})
 		}
 
-		logger.Info(logger.Params{
+		logger.Info(&logger.Params{
 			Key:      logger.Key.LoggerMode,
 			ModeName: "setting",
 			FuncName: "NewLogService",
@@ -238,72 +229,10 @@ func NewLogService() {
 	}
 
 	// Make sure everyone gets version info printed.
-	logger.Info(logger.Params{
+	logger.Info(&logger.Params{
 		Key:      logger.Key.AppInfo,
 		ModeName: "setting",
 		FuncName: "NewLogService",
 		Content:  fmt.Sprintf("app_name: %s, app_version: %s", AppName, AppVer),
 	})
-}
-
-// SetDataBaseInfo 从 ini 中获取数据
-func SetDataBaseInfo() {
-	var loggerParams = logger.Params{
-		ModeName: "setting",
-		FuncName: "SetDataBaseInfo",
-	}
-
-	var x *xorm.Engine
-	if err := models.NewTextEngin(x); err != nil {
-		loggerParams.Key = logger.Key.FatalInfo
-		loggerParams.Content = fmt.Sprintf("fail to set test ORM engin: %v", err)
-		logger.Fatal(loggerParams)
-	}
-
-	config := ini.Empty()
-
-	if utils.IsFile(ConfFile) {
-		if err := config.Append(ConfFile); err != nil {
-			loggerParams.Key = logger.Key.ErrorInfo
-			loggerParams.Content = fmt.Sprintf("Fail to load conf '%s': %v", ConfFile, err)
-			logger.Error(loggerParams)
-		}
-	}
-
-	config.Section("").Key("APP_NAME").SetValue(AppName)
-
-	// Save server config
-	config.Section("server").Key("HTTP_ADDR").SetValue(AppAddr)
-	config.Section("server").Key("HTTP_PORT").SetValue(AppPort)
-	config.Section("server").Key("SESSION_EXPIRES").SetValue(SessionExpires.String())
-
-	// Save database config
-	config.Section("database").Key("DB_TYPE").SetValue(models.DBConfig.Type)
-	config.Section("database").Key("HOST").SetValue(models.DBConfig.Host)
-	config.Section("database").Key("NAME").SetValue(models.DBConfig.Name)
-	config.Section("database").Key("USER").SetValue(models.DBConfig.User)
-	config.Section("database").Key("PASSWD").SetValue(models.DBConfig.Password)
-	config.Section("database").Key("SSL_MODE").SetValue(models.DBConfig.SSLMode)
-	config.Section("database").Key("PATH").SetValue(models.DBConfig.Path)
-
-	// Change Installock value to true
-	config.Section("security").Key("INSTALL_LOCK").SetValue("true")
-
-	// Save log config
-	config.Section("log").Key("MODE").SetValue("file")
-	config.Section("log").Key("LEVEL").SetValue("Info")
-	config.Section("log").Key("BUFFER_LEN").SetValue("100")
-	config.Section("log").Key("ROOT_PATH").SetValue(LogRootPath)
-
-	os.MkdirAll(filepath.Dir(ConfFile), os.ModePerm)
-
-	if err := config.SaveTo(ConfFile); err != nil {
-		loggerParams.Key = logger.Key.FatalInfo
-		loggerParams.Content = fmt.Sprintf("[Initial]Save config failed: %v", err)
-		logger.Fatal(loggerParams)
-	}
-
-	loggerParams.Key = logger.Key.BaseInfo
-	loggerParams.Content = "[Initial]Initialize database completed."
-	logger.Info(loggerParams)
 }

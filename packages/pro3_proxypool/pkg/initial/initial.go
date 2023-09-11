@@ -16,7 +16,7 @@ func GlobalInit() {
 	if setting.InstallLock {
 		if err := models.NewEngine(); err != nil {
 			// 日志记录
-			logger.Fatal(logger.Params{
+			logger.Fatal(&logger.Params{
 				Key:      logger.Key.InitORMEnginError,
 				ModeName: "initial",
 				FuncName: "GlobalInit",
@@ -28,7 +28,7 @@ func GlobalInit() {
 	}
 
 	if models.EnableSQLite3 {
-		logger.Info(logger.Params{
+		logger.Info(&logger.Params{
 			Key:      logger.Key.BaseInfo,
 			ModeName: "initial",
 			FuncName: "GlobalInit",
@@ -37,6 +37,6 @@ func GlobalInit() {
 	}
 
 	if !setting.InstallLock {
-		setting.SetDataBaseInfo()
+		models.SetDataBaseInfo()
 	}
 }

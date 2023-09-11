@@ -5,7 +5,7 @@ import (
 	"unknwon.dev/clog/v2"
 )
 
-func getParams(params Params) string {
+func getParams(params *Params) string {
 	var str string
 
 	if params.Extend != nil {
@@ -32,22 +32,22 @@ func getParams(params Params) string {
 	return str
 }
 
-func Trace(params Params) {
+func Trace(params *Params) {
 	clog.Trace(getParams(params))
 }
 
-func Info(params Params) {
+func Info(params *Params) {
 	clog.Info(getParams(params))
 }
 
-func Warn(params Params) {
+func Warn(params *Params) {
 	clog.Warn(getParams(params))
 }
 
-func Error(params Params) {
+func Error(params *Params) {
 	clog.Error(getParams(params))
 }
 
-func Fatal(params Params) {
+func Fatal(params *Params) {
 	clog.Fatal(getParams(params))
 }
