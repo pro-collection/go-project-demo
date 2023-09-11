@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	"go-project-demo/packages/pro3_proxypool/pkg/consts"
 	"go-project-demo/packages/pro3_proxypool/pkg/setting"
@@ -79,6 +80,7 @@ func getEngine() (*xorm.Engine, error) {
 		return nil, fmt.Errorf("unknown database type: %s", DBConfig.Type)
 	}
 
+	clog.Info("connStr: %s", connStr)
 	return xorm.NewEngine(DBConfig.Type, connStr)
 }
 

@@ -15,7 +15,7 @@ const VERSION = "/v2"
 func Run() {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc(VERSION+"/pi", ProxyHandler)
+	mux.HandleFunc(VERSION+"/ip", ProxyHandler)
 	mux.HandleFunc(VERSION+"/https", FindHandler)
 	logger.Info(&logger.Params{
 		Key:      logger.Key.BaseInfo,
@@ -44,6 +44,10 @@ func ProxyHandler(w http.ResponseWriter, r *http.Request) {
 func FindHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		w.Header().Set("content-type", "application/json")
-
+		b, err := json.Marshal(storage.ProxyRandom())
+		if err != nil {
+			return
+		}
+		w.Write(b)
 	}
 }

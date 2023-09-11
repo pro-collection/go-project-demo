@@ -10,6 +10,8 @@ import (
 func ProxyRandom() (ip *models.IP) {
 	ips, err := models.GetAll()
 
+	ip = &models.IP{}
+
 	x := len(ips)
 
 	var loggerParams = &logger.Params{
@@ -21,10 +23,18 @@ func ProxyRandom() (ip *models.IP) {
 	loggerParams.Content = fmt.Sprintf("len(ips) = %d", x)
 	logger.Info(loggerParams)
 
-	if err != nil || x == 0 {
+	if x == 0 {
+		loggerParams.Key = logger.Key.WarnInfo
+		loggerParams.Content = "no ips"
+		logger.Warn(loggerParams)
+		return ip
+	}
+
+	if err != nil {
 		loggerParams.Key = logger.Key.WarnInfo
 		loggerParams.Content = err.Error()
 		logger.Warn(loggerParams)
+		return ip
 	}
 
 	randomNum := utils.RandInt(0, x)

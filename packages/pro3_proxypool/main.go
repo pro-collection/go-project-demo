@@ -19,9 +19,10 @@ func main() {
 
 	//ipChan := make(chan *models.IP, 2000)
 
-	go func() {
-		api.Run()
-	}()
+	api.Run()
+	//go func() {
+	//	api.Run()
+	//}()
 
 	deferExec()
 }

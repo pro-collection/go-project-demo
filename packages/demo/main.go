@@ -9,6 +9,9 @@ func main() {
 
 	params["name"] = "yanle"
 
-	res := params["age"]
-	fmt.Println(res)
+	go func() {
+		res := params["age"]
+		fmt.Println(res)
+	}()
+
 }
