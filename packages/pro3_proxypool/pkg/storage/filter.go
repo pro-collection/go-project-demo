@@ -1,11 +1,16 @@
 package storage
 
 import (
+	"crypto/tls"
 	"fmt"
 	"go-project-demo/packages/pro3_proxypool/pkg/logger"
 	"go-project-demo/packages/pro3_proxypool/pkg/models"
 	"go-project-demo/packages/pro3_proxypool/pkg/utils"
+	"io"
+	"net/http"
+	"net/url"
 	"sync"
+	"time"
 )
 
 func ProxyRandom() (ip *models.IP) {
@@ -106,4 +111,87 @@ func CheckProxyDB() {
 	loggerParams.Key = logger.Key.BaseInfo
 	loggerParams.Content = fmt.Sprintf("After check, DB has: %d records.", x)
 	logger.Info(loggerParams)
+}
+
+func ProxyAdd(ip *models.IP) {
+	_ := models.InsertIps(ip)
+}
+
+func CheckIP(ip *models.IP) bool {
+	var pollURL string
+	var testIP string
+
+	if ip.Type2 == "https" {
+		testIP = "https://" + ip.Data
+		pollURL = "https://httpbin.org/get?show_env=1"
+	} else {
+		testIP = "http://" + ip.Data
+		pollURL = "http://httpbin.org/get?show_env=1"
+	}
+
+	proxy, _ := url.Parse(testIP)
+
+	logger.Info(&logger.Params{
+		Key:      logger.Key.BaseInfo,
+		ModeName: "storage",
+		FuncName: "CheckIP",
+		Content:  testIP,
+	})
+
+	begin := time.Now()
+
+	tlsConfig := &tls.Config{InsecureSkipVerify: true}
+
+	netTransport := &http.Transport{
+		Proxy:               http.ProxyURL(proxy),
+		TLSClientConfig:     tlsConfig,
+		MaxIdleConnsPerHost: 50,
+	}
+
+	httpClient := &http.Client{
+		Timeout:   time.Second * 20,
+		Transport: netTransport,
+	}
+
+	request, _ := http.NewRequest("GET", pollURL, nil)
+
+	request.Header.Add("accept", "text/plain")
+
+	resp, err := httpClient.Do(request)
+
+	if err != nil {
+		logger.Warn(&logger.Params{
+			Key:      logger.Key.WarnInfo,
+			ModeName: "storage",
+			FuncName: "CheckIP",
+			Content:  fmt.Sprintf("[CheckIP] testIP = %s, pollURL = %s: Error = %v", testIP, pollURL, err),
+		})
+
+		return false
+	}
+
+	// 终止函数执行的时候， 退出请求
+	defer func(Body io.ReadCloser) {
+		_ := Body.Close()
+	}(resp.Body)
+
+	if resp.StatusCode == 200 {
+		// todo yanlele 判断返回数据的合法性
+
+		ip.Speed = time.Now().Sub(begin).Milliseconds()
+
+		// 保存更新
+		// todo yanlele 保存更新
+		if err = models.Update(ip); err != nil {
+			logger.Warn(&logger.Params{
+				Key:      logger.Key.WarnInfo,
+				ModeName: "storage",
+				FuncName: "CheckIP",
+				Content:  fmt.Sprintf("[CheckIP] Update IP = %v Error = %v", *ip, err),
+			})
+		}
+		return true
+	}
+
+	return false
 }

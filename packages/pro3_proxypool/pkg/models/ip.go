@@ -74,3 +74,31 @@ func CountIps() int64 {
 	count, _ := x.Where("id>=?", 0).Count(new(IP))
 	return count
 }
+
+func InsertIps(ip *IP) (err error) {
+	ses := x.NewSession()
+
+	defer ses.Close()
+
+	if err := ses.Begin(); err != nil {
+		return err
+	}
+
+	if _, err = ses.Insert(ip); err != nil {
+		return err
+	}
+
+	return ses.Commit()
+}
+
+func Update(ip *IP) error {
+	temp := ip
+	temp.UpdateTime = time.Now()
+	_, err := x.Id(1).Update(temp)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
