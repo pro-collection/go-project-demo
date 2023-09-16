@@ -6,7 +6,7 @@ import (
 	"github.com/go-xorm/xorm"
 	"go-project-demo/packages/pro3_proxypool/pkg/logger"
 	"go-project-demo/packages/pro3_proxypool/pkg/setting"
-	"go-project-demo/packages/pro3_proxypool/pkg/utils"
+	"go-project-demo/packages/pro3_proxypool/pkg/utils/fileTool"
 	"os"
 	"path/filepath"
 	"xorm.io/core"
@@ -45,7 +45,7 @@ func SetDataBaseInfo() {
 
 	config := ini.Empty()
 
-	if utils.IsFile(setting.ConfFile) {
+	if fileTool.IsFile(setting.ConfFile) {
 		if err := config.Append(setting.ConfFile); err != nil {
 			loggerParams.Key = logger.Key.ErrorInfo
 			loggerParams.Content = fmt.Sprintf("Fail to load conf '%s': %v", setting.ConfFile, err)

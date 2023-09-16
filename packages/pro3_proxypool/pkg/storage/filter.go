@@ -137,12 +137,12 @@ func CheckIP(ip *models.IP) bool {
 
 	proxy, _ := url.Parse(testIP)
 
-	logger.Info(&logger.Params{
-		Key:      logger.Key.BaseInfo,
-		ModeName: "storage",
-		FuncName: "CheckIP",
-		Content:  testIP,
-	})
+	//logger.Info(&logger.Params{
+	//	Key:      logger.Key.BaseInfo,
+	//	ModeName: "storage",
+	//	FuncName: "CheckIP",
+	//	Content:  testIP,
+	//})
 
 	begin := time.Now()
 
@@ -166,12 +166,12 @@ func CheckIP(ip *models.IP) bool {
 	resp, err := httpClient.Do(request)
 
 	if err != nil {
-		logger.Warn(&logger.Params{
-			Key:      logger.Key.WarnInfo,
-			ModeName: "storage",
-			FuncName: "CheckIP",
-			Content:  fmt.Sprintf("[CheckIP] testIP = %s, pollURL = %s: Error = %v", testIP, pollURL, err),
-		})
+		//logger.Warn(&logger.Params{
+		//	Key:      logger.Key.WarnInfo,
+		//	ModeName: "storage",
+		//	FuncName: "CheckIP",
+		//	Content:  fmt.Sprintf("[CheckIP] testIP = %s, pollURL = %s: Error = %v", testIP, pollURL, err),
+		//})
 
 		return false
 	}
@@ -188,14 +188,14 @@ func CheckIP(ip *models.IP) bool {
 
 		// 保存更新
 		// todo yanlele 保存更新
-		if err = models.Update(ip); err != nil {
-			logger.Warn(&logger.Params{
-				Key:      logger.Key.WarnInfo,
-				ModeName: "storage",
-				FuncName: "CheckIP",
-				Content:  fmt.Sprintf("[CheckIP] Update IP = %v Error = %v", *ip, err),
-			})
-		}
+		//if err = models.Update(ip); err != nil {
+		//	logger.Warn(&logger.Params{
+		//		Key:      logger.Key.WarnInfo,
+		//		ModeName: "storage",
+		//		FuncName: "CheckIP",
+		//		Content:  fmt.Sprintf("[CheckIP] Update IP = %v Error = %v", *ip, err),
+		//	})
+		//}
 		return true
 	}
 

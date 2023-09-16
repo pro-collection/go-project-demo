@@ -1,0 +1,602 @@
+[
+  {
+    "ip": "138.197.102.119:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "139.180.163.149:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.164.150.123:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "173.249.37.45:5005",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "38.156.238.95:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "66.96.241.162:3125",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "104.25.124.26:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "50.206.25.107:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "162.159.242.68:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "75.89.101.60:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "204.157.240.65:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.79.20.199:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.189.116.159:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "140.227.64.248:58888",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "143.110.185.121:3128",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "161.97.132.227:3128",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.152.208.24:8055",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "35.234.87.239:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "8.219.43.134:3",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "165.225.20.83:10605",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "104.17.71.206:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "20.206.106.192:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "108.161.221.97:28080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.162.72.27:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "64.71.170.35:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "71.86.129.131:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "159.65.129.62:8081",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "38.45.246.210:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "216.122.181.69:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "20.118.133.34:8118",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "8.217.123.211:59394",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.190.76.115:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "104.21.20.135:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "134.35.15.161:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "8.219.188.34:10028",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "50.235.247.114:8085",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.184.73.114:40033",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "68.178.170.59:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.133.168.79:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "104.17.78.107:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "204.137.175.66:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "134.175.140.34:9091",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.133.168.112:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "216.39.242.116:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.174.92.200:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "138.68.235.51:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "149.19.34.219:8082",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "174.138.22.199:8888",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "64.227.6.0:4003",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "146.190.49.118:3128",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.185.234.249:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "40.80.232.46:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "144.49.99.170:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.175.239.144:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "8.140.23.32:7890",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "172.104.58.93:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "104.131.58.81:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.133.168.51:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "38.52.222.219:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "129.153.107.221:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "206.42.55.99:3128",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "198.49.68.80:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "38.7.16.196:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "165.227.47.32:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "207.180.236.72:3128",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "162.159.243.139:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.179.193.122:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "8.219.97.130:3026",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.77.200.198:3128",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.177.98.130:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "66.206.32.162:3128",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "72.169.66.157:87",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "184.105.134.166:48324",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "136.226.33.62:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "3.219.158.209:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "104.21.19.4:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "8.219.221.233:10028",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "38.156.233.74:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "20.235.173.31:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "206.189.146.13:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "162.245.1.243:3199",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "38.156.238.182:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "148.0.92.156:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.64.127.198:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "34.192.172.235:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "52.221.188.129:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "198.11.175.192:3128",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "104.209.216.182:8012",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "198.199.86.11:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "35.200.95.92:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "54.93.184.68:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "165.225.20.87:10605",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "161.97.90.241:8080",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "8.45.52.252:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "204.157.240.57:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "20.80.185.218:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "34.80.222.244:59394",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "45.189.116.62:999",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "35.182.7.190:443",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  },
+  {
+    "ip": "34.254.130.113:80",
+    "type1": "http",
+    "speed": 100,
+    "source": "89ip"
+  }
+]

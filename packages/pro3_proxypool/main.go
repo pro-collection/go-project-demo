@@ -1,7 +1,12 @@
 package main
 
 import (
-	"go-project-demo/packages/pro3_proxypool/pkg/utils"
+	"encoding/json"
+	"fmt"
+	"go-project-demo/packages/pro3_proxypool/pkg/models"
+	"go-project-demo/packages/pro3_proxypool/pkg/storage"
+	"go-project-demo/packages/pro3_proxypool/pkg/utils/handleFile"
+	"sync"
 	"unknwon.dev/clog/v2"
 )
 
@@ -50,29 +55,36 @@ func main() {
 	//
 	//deferExec()
 
-	//res := getter.IP89()
-	//for _, ip := range res {
-	//	fmt.Printf("ip: %s\n", ip.Data)
-	//}
-
-	// 获取当前工作目录的绝对路径
-	//wd, err := os.Getwd()
-	//if err != nil {
-	//	fmt.Println("获取当前工作目录失败:", err)
-	//	return
-	//}
-	//
-	//// 获取相对路径
-	//relativePath := "subdir/example.txt"
-	//absPath := filepath.Join(wd, relativePath)
-	//
-	//fmt.Println("相对路径:", relativePath)
-	//fmt.Println("绝对路径:", absPath)
-
-	_, err := utils.FindFile("ip.json")
+	file, err := handleFile.FindFile("ip.json")
+	defer file.Close()
 	if err != nil {
 		return
 	}
+
+	//handleFile.WriteFile(file)
+
+	fileInfo, err := handleFile.ReadFile(file)
+
+	var ipList []*models.IP
+	err = json.Unmarshal(fileInfo, &ipList)
+	if err != nil {
+		fmt.Println("error: ", err.Error())
+	}
+
+	var wg sync.WaitGroup
+
+	// 校验 ip 是否好用
+	for _, ip := range ipList {
+		fmt.Println("ip: ", ip.Data)
+		wg.Add(1)
+		go func(value *models.IP) {
+			used := storage.CheckIP(value)
+			fmt.Printf("ip: %s, is used: %t\n", value.Data, used)
+			wg.Done()
+		}(ip)
+	}
+
+	wg.Wait()
 }
 
 // todo yanlele run
