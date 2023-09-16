@@ -99,8 +99,10 @@ func CheckProxyDB() {
 	for _, value := range ips {
 		wg.Add(1)
 		go func(v *models.IP) {
-			// todo yanlele CheckIP
-			// todo yanlele ProxyDel
+			if !CheckIP(v) {
+				ProxyDelete(v)
+			}
+			wg.Done()
 		}(value)
 	}
 
@@ -115,6 +117,10 @@ func CheckProxyDB() {
 
 func ProxyAdd(ip *models.IP) {
 	_ = models.InsertIps(ip)
+}
+
+func ProxyDelete(ip *models.IP) {
+	_ = models.DeleteIP(ip)
 }
 
 func CheckIP(ip *models.IP) bool {

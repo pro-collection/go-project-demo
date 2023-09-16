@@ -102,3 +102,12 @@ func Update(ip *IP) error {
 
 	return nil
 }
+
+func DeleteIP(ip *IP) error {
+	_, err := x.Delete(ip)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
