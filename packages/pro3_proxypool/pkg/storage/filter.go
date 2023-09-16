@@ -114,7 +114,7 @@ func CheckProxyDB() {
 }
 
 func ProxyAdd(ip *models.IP) {
-	_ := models.InsertIps(ip)
+	_ = models.InsertIps(ip)
 }
 
 func CheckIP(ip *models.IP) bool {
@@ -172,7 +172,7 @@ func CheckIP(ip *models.IP) bool {
 
 	// 终止函数执行的时候， 退出请求
 	defer func(Body io.ReadCloser) {
-		_ := Body.Close()
+		_ = Body.Close()
 	}(resp.Body)
 
 	if resp.StatusCode == 200 {
