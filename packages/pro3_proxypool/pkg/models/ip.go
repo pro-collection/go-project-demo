@@ -111,3 +111,11 @@ func DeleteIP(ip *IP) error {
 
 	return nil
 }
+
+func NewIP() *IP {
+	return &IP{
+		Speed:      100,
+		CreateTime: time.Now(),
+		UpdateTime: time.Now(),
+	}
+}

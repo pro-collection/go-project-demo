@@ -201,3 +201,9 @@ func CheckIP(ip *models.IP) bool {
 
 	return false
 }
+
+func CheckProxy(ip *models.IP) {
+	if CheckIP(ip) {
+		ProxyAdd(ip)
+	}
+}
