@@ -6,13 +6,18 @@ import (
 	"go-project-demo/packages/pro3_proxypool/pkg/getter"
 	"go-project-demo/packages/pro3_proxypool/pkg/models"
 	"os"
+	"path/filepath"
 	"sync"
 )
 
 func FindFile(filename string) (file *os.File, err error) {
-	if _, err = os.Stat(filename); os.IsNotExist(err) {
+	wd, err := os.Getwd()
+
+	path := filepath.Join(wd, filename)
+
+	if _, err = os.Stat(path); os.IsNotExist(err) {
 		// 文件不存在，创建文件
-		file, err = os.Create(filename)
+		file, err = os.Create(path)
 		if err != nil {
 			fmt.Println("创建文件失败:", err)
 			return nil, err
@@ -22,7 +27,7 @@ func FindFile(filename string) (file *os.File, err error) {
 	} else {
 		// 文件存在，直接使用
 		// 读写且清空源文件
-		file, err = os.OpenFile(filename, os.O_RDWR, 0644)
+		file, err = os.OpenFile(path, os.O_RDWR, 0644)
 		if err != nil {
 			fmt.Println("打开文件失败:", err)
 			return nil, err
@@ -80,7 +85,11 @@ func WriteFileWithNetWork(file *os.File) {
 }
 
 func WriteToLocal(writePath string, ipList *[]*models.IP) {
-	file, err := FindFile(writePath)
+	wd, err := os.Getwd()
+
+	path := filepath.Join(wd, writePath)
+
+	file, err := FindFile(path)
 	if err != nil {
 		return
 	}

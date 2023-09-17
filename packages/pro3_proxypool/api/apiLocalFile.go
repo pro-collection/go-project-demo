@@ -24,9 +24,9 @@ func RunWithLocal() {
 		Key:      logger.Key.BaseInfo,
 		ModeName: "api",
 		FuncName: "Run",
-		Content:  "starting server: " + "127.0.0.1" + ":" + "3000",
+		Content:  "starting server: " + "127.0.0.1" + ":" + "3000/ip",
 	})
-	http.ListenAndServe("127.0.0.1"+":"+"3000/ip", mux)
+	http.ListenAndServe("127.0.0.1"+":"+"3000", mux)
 }
 
 func proxyHandler(w http.ResponseWriter, r *http.Request) {

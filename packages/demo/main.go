@@ -12,11 +12,5 @@ type Employee struct {
 }
 
 func main() {
-	person := Person{
-		Name: "John",
-		Age:  30,
-	}
-
-	employee := Employee(person)
 
 }
