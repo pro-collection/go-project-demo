@@ -21,6 +21,7 @@ func FindFile(filename string) (file *os.File, err error) {
 		fmt.Println("文件创建成功")
 	} else {
 		// 文件存在，直接使用
+		// 读写且清空源文件
 		file, err = os.OpenFile(filename, os.O_RDWR, 0644)
 		if err != nil {
 			fmt.Println("打开文件失败:", err)
@@ -39,7 +40,28 @@ func WriteFileWithNetWork(file *os.File) {
 	ipList := getter.IP89()
 	jsonData, _ := json.Marshal(ipList)
 
-	_, err := file.WriteString(string(jsonData) + "\n")
+	err := file.Truncate(0)
+	_, err = file.Seek(0, 0)
+
+	_, err = file.WriteString(string(jsonData) + "\n")
+	if err != nil {
+		fmt.Println("写入文件失败:", err)
+		return
+	}
+}
+
+func WriteToLocal(writePath string, ipList *[]*models.IP) {
+	file, err := FindFile(writePath)
+	if err != nil {
+		return
+	}
+
+	jsonData, _ := json.Marshal(ipList)
+
+	err = file.Truncate(0)
+	_, err = file.Seek(0, 0)
+
+	_, err = file.WriteString(string(jsonData) + "\n")
 	if err != nil {
 		fmt.Println("写入文件失败:", err)
 		return
@@ -49,6 +71,7 @@ func WriteFileWithNetWork(file *os.File) {
 // ReadFile
 // 读取文件， 返回 []byte
 func ReadFile(file *os.File) ([]byte, error) {
+
 	// 获取文件大小
 	fileInfo, err := file.Stat()
 	if err != nil {
@@ -69,6 +92,8 @@ func ReadFile(file *os.File) ([]byte, error) {
 	return buffer, nil
 }
 
+// FilterGetUsedIpList
+// 过滤 ip , 只留下可使用的 ip 地址信息
 func FilterGetUsedIpList(fileContent []byte) []*models.IP {
 	var ipList []*models.IP
 	err := json.Unmarshal(fileContent, &ipList)
