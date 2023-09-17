@@ -66,7 +66,10 @@ func WriteFileWithNetWork(file *os.File) {
 
 	jsonData, _ := json.Marshal(ipList)
 
+	// 文件阶段
 	err := file.Truncate(0)
+
+	// 光标移动
 	_, err = file.Seek(0, 0)
 
 	_, err = file.WriteString(string(jsonData) + "\n")
