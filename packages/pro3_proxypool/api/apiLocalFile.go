@@ -10,6 +10,7 @@ import (
 	"go-project-demo/packages/pro3_proxypool/pkg/utils/handleFile"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 // VERSION for this program
@@ -30,9 +31,14 @@ func RunWithLocal() {
 }
 
 func proxyHandler(w http.ResponseWriter, r *http.Request) {
+	wd, _ := os.Getwd()
+
 	if r.Method == "GET" {
 		w.Header().Set("content-type", "application/json")
-		file, err := os.OpenFile("ip.json", os.O_RDWR, 0644)
+
+		path := filepath.Join(wd, "ip.json")
+
+		file, err := os.OpenFile(path, os.O_RDWR, 0644)
 		fileContent, err := handleFile.ReadFile(file)
 		if err != nil {
 			fmt.Println("打开文件失败 - 确实文件 ip.json", err)

@@ -85,11 +85,7 @@ func WriteFileWithNetWork(file *os.File) {
 }
 
 func WriteToLocal(writePath string, ipList *[]*models.IP) {
-	wd, err := os.Getwd()
-
-	path := filepath.Join(wd, writePath)
-
-	file, err := FindFile(path)
+	file, err := FindFile(writePath)
 	if err != nil {
 		return
 	}
