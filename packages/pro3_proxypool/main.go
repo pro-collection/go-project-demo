@@ -71,34 +71,33 @@ func main() {
 		fmt.Println("error: ", err.Error())
 	}
 
-	//ipChan := make(chan *models.IP, len(ipList))
+	ipChan := make(chan *models.IP, len(ipList))
 
 	// 校验 ip 是否好用
 	fmt.Printf("长度: %d \n", len(ipList))
 
 	var wg sync.WaitGroup
 
-	var newIpList []*models.IP
 	for _, ip := range ipList {
 		wg.Add(1)
 
-		go getUsedIP(ip, &newIpList, &wg)
+		go getUsedIP(ip, ipChan, &wg)
 	}
 
 	wg.Wait()
+	close(ipChan)
 
-	for _, ip := range newIpList {
+	for ip := range ipChan {
 		fmt.Println("ip data: ", ip.Data, "    -     ip speed: ", ip.Speed)
 	}
 
 	fmt.Println("结束")
-
 }
 
-func getUsedIP(ip *models.IP, ipList *[]*models.IP, wg *sync.WaitGroup) {
+func getUsedIP(ip *models.IP, ipList chan<- *models.IP, wg *sync.WaitGroup) {
 	used := storage.CheckIP(ip)
 	if used {
-		*ipList = append(*ipList, ip)
+		ipList <- ip
 	}
 	wg.Done()
 }
