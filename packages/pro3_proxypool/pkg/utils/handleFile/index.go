@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"go-project-demo/packages/pro3_proxypool/pkg/getter"
+	"go-project-demo/packages/pro3_proxypool/pkg/models"
 	"os"
+	"sync"
 )
 
 func FindFile(filename string) (file *os.File, err error) {
@@ -31,9 +33,9 @@ func FindFile(filename string) (file *os.File, err error) {
 	return
 }
 
-// WriteFile
+// WriteFileWithNetWork .
 // 写入文件
-func WriteFile(file *os.File) {
+func WriteFileWithNetWork(file *os.File) {
 	ipList := getter.IP89()
 	jsonData, _ := json.Marshal(ipList)
 
@@ -65,4 +67,36 @@ func ReadFile(file *os.File) ([]byte, error) {
 	}
 
 	return buffer, nil
+}
+
+func FilterGetUsedIpList(fileContent []byte) []*models.IP {
+	var ipList []*models.IP
+	err := json.Unmarshal(fileContent, &ipList)
+	if err != nil {
+		fmt.Println("error: ", err.Error())
+	}
+
+	ipChan := make(chan *models.IP, len(ipList))
+
+	// 校验 ip 是否好用
+	fmt.Printf("长度: %d \n", len(ipList))
+
+	var wg sync.WaitGroup
+
+	for _, ip := range ipList {
+		wg.Add(1)
+
+		go getUsedIP(ip, ipChan, &wg)
+	}
+
+	wg.Wait()
+	close(ipChan)
+
+	var list []*models.IP
+
+	for ip := range ipChan {
+		list = append(list, ip)
+	}
+
+	return list
 }
