@@ -21,6 +21,7 @@ func main() {
 		return
 	}
 
+	// 网络获取 ip 地址核心方法
 	handleFile.WriteFileWithNetWork(file)
 
 	// 重新读取一遍文档

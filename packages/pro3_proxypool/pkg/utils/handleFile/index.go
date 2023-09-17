@@ -37,7 +37,33 @@ func FindFile(filename string) (file *os.File, err error) {
 // WriteFileWithNetWork .
 // 写入文件
 func WriteFileWithNetWork(file *os.File) {
-	ipList := getter.IP89()
+	var ipList []*models.IP
+
+	var functionList = []GetIPFunction{
+		getter.IP89,
+		//getter.KDL,
+		//getter.PLPSSL,
+		getter.IP3306,
+		//getter.PZZQZ,
+	}
+
+	var wg sync.WaitGroup
+	for _, function := range functionList {
+		wg.Add(1)
+		go func(f GetIPFunction) {
+			temp := f()
+
+			for _, ip := range temp {
+				ipList = append(ipList, ip)
+			}
+
+			wg.Done()
+		}(function)
+
+	}
+
+	wg.Wait()
+
 	jsonData, _ := json.Marshal(ipList)
 
 	err := file.Truncate(0)

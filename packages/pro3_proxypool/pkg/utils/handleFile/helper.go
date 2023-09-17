@@ -13,7 +13,7 @@ func getUsedIP(ip *models.IP, ipList chan<- *models.IP, wg *sync.WaitGroup) {
 		ipList <- ip
 	}
 
-	fmt.Println("处理 ip 中: ", ip.Data)
+	fmt.Println("处理 ip 是否可用: ", ip.Data, "  -- 结论： ", used)
 
 	wg.Done()
 }
