@@ -19,14 +19,14 @@ func RunWithLocal() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/ip", proxyHandler)
-	mux.HandleFunc("/https", findHandler)
+	//mux.HandleFunc("/https", findHandler)
 	logger.Info(&logger.Params{
 		Key:      logger.Key.BaseInfo,
 		ModeName: "api",
 		FuncName: "Run",
 		Content:  "starting server: " + "127.0.0.1" + ":" + "3000",
 	})
-	http.ListenAndServe("127.0.0.1"+":"+"3000", mux)
+	http.ListenAndServe("127.0.0.1"+":"+"3000/ip", mux)
 }
 
 func proxyHandler(w http.ResponseWriter, r *http.Request) {
