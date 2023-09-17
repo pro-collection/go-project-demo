@@ -114,7 +114,7 @@ func DeleteIP(ip *IP) error {
 
 func NewIP() *IP {
 	return &IP{
-		Speed:      100,
+		Speed:      -1,
 		CreateTime: time.Now(),
 		UpdateTime: time.Now(),
 	}

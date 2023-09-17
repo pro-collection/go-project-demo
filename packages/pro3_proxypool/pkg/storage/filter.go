@@ -155,7 +155,8 @@ func CheckIP(ip *models.IP) bool {
 	}
 
 	httpClient := &http.Client{
-		Timeout:   time.Second * 20,
+		// 超时时间， 不能超过三秒
+		Timeout:   time.Second * 3,
 		Transport: netTransport,
 	}
 

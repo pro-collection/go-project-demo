@@ -71,20 +71,36 @@ func main() {
 		fmt.Println("error: ", err.Error())
 	}
 
-	var wg sync.WaitGroup
+	//ipChan := make(chan *models.IP, len(ipList))
 
 	// 校验 ip 是否好用
+	fmt.Printf("长度: %d \n", len(ipList))
+
+	var wg sync.WaitGroup
+
+	var newIpList []*models.IP
 	for _, ip := range ipList {
-		fmt.Println("ip: ", ip.Data)
 		wg.Add(1)
-		go func(value *models.IP) {
-			used := storage.CheckIP(value)
-			fmt.Printf("ip: %s, is used: %t\n", value.Data, used)
-			wg.Done()
-		}(ip)
+
+		go getUsedIP(ip, &newIpList, &wg)
 	}
 
 	wg.Wait()
+
+	for _, ip := range newIpList {
+		fmt.Println("ip data: ", ip.Data, "    -     ip speed: ", ip.Speed)
+	}
+
+	fmt.Println("结束")
+
+}
+
+func getUsedIP(ip *models.IP, ipList *[]*models.IP, wg *sync.WaitGroup) {
+	used := storage.CheckIP(ip)
+	if used {
+		*ipList = append(*ipList, ip)
+	}
+	wg.Done()
 }
 
 // todo yanlele run
