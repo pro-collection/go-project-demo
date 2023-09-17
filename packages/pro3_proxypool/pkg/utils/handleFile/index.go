@@ -154,3 +154,27 @@ func FilterGetUsedIpList(fileContent []byte) []*models.IP {
 
 	return list
 }
+
+func GetIP() {
+	file, err := FindFile("source_ip.json")
+	defer file.Close()
+	if err != nil {
+		return
+	}
+
+	// 网络获取 ip 地址核心方法
+	WriteFileWithNetWork(file)
+
+	// 重新读取一遍文档
+	file, err = FindFile("source_ip.json")
+	fileContent, err := ReadFile(file)
+
+	list := FilterGetUsedIpList(fileContent)
+	fmt.Println("ip 处理结束")
+	for _, ip := range list {
+		fmt.Println("ip: ", ip)
+	}
+
+	//重新写入文件
+	WriteToLocal("ip.json", &list)
+}

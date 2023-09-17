@@ -11,8 +11,8 @@ type IP struct {
 	Type2      string    `xorm:"NULL" json:"type2,omitempty"`
 	Speed      int64     `xorm:"NOT NULL" json:"speed,omitempty"`  //连接速度
 	Source     string    `xorm:"NOT NULL" json:"source,omitempty"` //代理来源
-	CreateTime time.Time `xorm:"NOT NULL" json:"-"`
-	UpdateTime time.Time `xorm:"NOT NULL" json:"-"`
+	CreateTime time.Time `xorm:"NOT NULL" json:"create_time"`
+	UpdateTime time.Time `xorm:"NOT NULL" json:"update_time"`
 }
 
 type DBConfigStruct struct {
