@@ -12,5 +12,10 @@ type Employee struct {
 }
 
 func main() {
+	employee := &Employee{
+		Name: "yanle",
+		Age:  32,
+	}
 
+	employee.Name = "yanle"
 }
