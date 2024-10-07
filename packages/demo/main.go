@@ -17,12 +17,16 @@ type Employee struct {
 }
 
 func main() {
-	body, err := demos.Demo1("https://juejin.cn/post/7311603432929984552")
 
-	// 存在错误
-	if err != nil {
-		return
+	MConfig, _ := demos.LoadJsonData("packages/demo/demos/config.json", "")
+
+	fmt.Println("MConfig: ", *MConfig)
+
+	fmt.Print("MConfig.UDPTimeout： ", MConfig.UDPTimeout)
+
+	for index, user := range MConfig.UserGroups {
+		fmt.Println("user: ", user)
+		fmt.Println("index: ", index)
 	}
 
-	fmt.Println(body)
 }
