@@ -39,10 +39,8 @@ func LoadJsonData(fileName string, v interface{}) (*Config, error) {
 	var MConfig = &Config{}
 
 	if err != nil {
-		if err != nil {
-			fmt.Println("Error opening file:", err)
-			return MConfig, err
-		}
+		fmt.Println("Error opening file:", err)
+		return MConfig, err
 	}
 
 	defer file.Close()
