@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"go-project-demo/packages/demo/demos"
+)
+
 type Person struct {
 	Name string
 	Age  int
@@ -12,10 +17,5 @@ type Employee struct {
 }
 
 func main() {
-	employee := &Employee{
-		Name: "yanle",
-		Age:  32,
-	}
-
-	employee.Name = "yanle"
+	fmt.Printf(demos.Demo1())
 }
