@@ -17,5 +17,12 @@ type Employee struct {
 }
 
 func main() {
-	fmt.Printf(demos.Demo1())
+	body, err := demos.Demo1("https://juejin.cn/post/7311603432929984552")
+
+	// 存在错误
+	if err != nil {
+		return
+	}
+
+	fmt.Println(body)
 }
